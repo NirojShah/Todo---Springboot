@@ -21,16 +21,8 @@ public class TaskServiceImplementation implements TodoService{
     public ResponseDto createTask(TaskDto taskDto) {
         Todo todo = new Todo();
 
-        System.out.println(taskDto.getStatus());
-        System.out.println(taskDto.getTodo());
-
         todo.setStatus(taskDto.getStatus());
         todo.setTodo(taskDto.getTodo());
-
-        System.out.println(todo.getStatus());
-        System.out.println(todo.getTodo());
-
-//        return new ResponseDto("failed",HttpStatus.FORBIDDEN,null);
 
         Todo savedTodo = todoRepository.save(todo);
 
@@ -39,6 +31,10 @@ public class TaskServiceImplementation implements TodoService{
 
     @Override
     public ResponseDto deleteTask(Integer taskId) {
+        Optional<Todo> todo = todoRepository.findById(taskId);
+        if(todo.isEmpty()){
+            return new ResponseDto("failed",HttpStatus.NOT_FOUND,null);
+        }
         todoRepository.deleteById(taskId);
         return new ResponseDto("success",HttpStatus.OK,null);
     }
@@ -50,11 +46,18 @@ public class TaskServiceImplementation implements TodoService{
         if(task.isEmpty()){
             return new ResponseDto("Task Not found.",HttpStatus.NOT_FOUND,null);
         }
-
         Todo todo = task.get();
-        System.out.println(todo.getStatus());
+        if(taskUpdateDto.getTask() != null){
+            todo.setTodo(taskUpdateDto.getTask());
+        }
 
-        return new ResponseDto("Task Updated successfully",HttpStatus.OK,null);
+        if(taskUpdateDto.getStatus() != null){
+            todo.setStatus(taskUpdateDto.getStatus());
+        }
+
+        Todo updateTodo = todoRepository.save(todo);
+
+        return new ResponseDto("Task Updated successfully",HttpStatus.OK,updateTodo);
     }
 
     @Override
