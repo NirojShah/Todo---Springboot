@@ -2,6 +2,7 @@ package com.todo.www.todo.controller;
 
 import com.todo.www.todo.dto.ResponseDto;
 import com.todo.www.todo.dto.TaskDto;
+import com.todo.www.todo.dto.TaskUpdateDto;
 import com.todo.www.todo.service.TodoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,5 +22,16 @@ public class TodoController {
     @GetMapping("/todos")
     public ResponseDto getTasks(){
         return todoService.getTasks();
+    }
+
+    @PutMapping("/todo")
+    public ResponseDto updateTask(@RequestBody TaskUpdateDto taskUpdateDto){
+        return todoService.updateTask(taskUpdateDto);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseDto deleteTask(@PathVariable int id){
+        System.out.println(id);
+        return todoService.deleteTask(id);
     }
 }
