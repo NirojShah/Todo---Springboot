@@ -1,6 +1,7 @@
 package com.todo.www.todo.dto;
 
 
+import com.todo.www.todo.Status;
 import lombok.*;
 
 @Data
@@ -11,4 +12,5 @@ import lombok.*;
 public class TaskUpdateDto {
     private int taskId;
     private String task;
+    private Status status;
 }
