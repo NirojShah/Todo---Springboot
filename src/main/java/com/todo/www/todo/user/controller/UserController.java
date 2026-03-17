@@ -3,12 +3,10 @@ package com.todo.www.todo.user.controller;
 import com.todo.www.todo.dto.ResponseDto;
 import com.todo.www.todo.user.dto.CreateUserDto;
 import com.todo.www.todo.user.dto.LoginUserDto;
+import com.todo.www.todo.user.dto.UpdaetUserDto;
 import com.todo.www.todo.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -25,5 +23,10 @@ public class UserController {
     @PostMapping("/login")
     public ResponseDto login(@RequestBody LoginUserDto loginUserDto){
         return userService.login(loginUserDto);
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseDto updateProfie(@RequestBody UpdaetUserDto updateUser, @PathVariable int id){
+        return userService.updateProfile(updateUser, id);
     }
 }
