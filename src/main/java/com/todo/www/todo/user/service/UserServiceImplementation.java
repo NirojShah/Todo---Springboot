@@ -5,12 +5,12 @@ import com.todo.www.todo.dto.ResponseDto;
 import com.todo.www.todo.user.UserEntity;
 import com.todo.www.todo.user.dto.CreateUserDto;
 import com.todo.www.todo.user.dto.LoginUserDto;
+import com.todo.www.todo.user.dto.UpdaetUserDto;
 import com.todo.www.todo.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.util.Optional;
 
 @Service
@@ -45,6 +45,34 @@ public class UserServiceImplementation implements UserService {
         if(userInfo.isEmpty()){
             return new ResponseDto("failed",HttpStatus.NOT_FOUND,null);
         }
+        return new ResponseDto("success",HttpStatus.OK,null);
+    }
+
+    @Override
+    public ResponseDto updateProfile(UpdaetUserDto updatetUserDto, int userId) {
+        Optional<UserEntity> isPresent = userRepository.findById(userId);
+        if(isPresent.isEmpty()){
+            return new ResponseDto("failed",HttpStatus.NOT_FOUND,null);
+        }
+        UserEntity user = isPresent.get();
+        if(updatetUserDto.getFirstName() != null){
+            user.setFirstName(updatetUserDto.getFirstName());
+        }
+        if(updatetUserDto.getLastName() != null){
+            user.setLastName(updatetUserDto.getLastName());
+        }
+        if(updatetUserDto.getEmail() != null){
+            user.setEmail(updatetUserDto.getEmail());
+        }
+        if(updatetUserDto.getPassword() != null) {
+            user.setPassword(updatetUserDto.getPassword());
+        }
+        if(updatetUserDto.getPhoneNo() != null){
+            user.setPhoneNo(updatetUserDto.getPhoneNo());
+        }
+
+        UserEntity updateedUser = userRepository.save(user);
+
         return new ResponseDto("success",HttpStatus.OK,null);
     }
 }
