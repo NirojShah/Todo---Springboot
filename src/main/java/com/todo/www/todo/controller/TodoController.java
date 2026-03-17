@@ -31,7 +31,6 @@ public class TodoController {
 
     @DeleteMapping("/delete/{id}")
     public ResponseDto deleteTask(@PathVariable int id){
-        System.out.println(id);
         return todoService.deleteTask(id);
     }
 }
