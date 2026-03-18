@@ -6,8 +6,11 @@ import com.todo.www.todo.user.UserEntity;
 import com.todo.www.todo.user.dto.CreateUserDto;
 import com.todo.www.todo.user.dto.LoginUserDto;
 import com.todo.www.todo.user.dto.UpdaetUserDto;
+import com.todo.www.todo.user.modelmapper.ModelMapperConfig;
 import com.todo.www.todo.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +21,9 @@ import java.util.Optional;
 public class UserServiceImplementation implements UserService {
 
     private final UserRepository userRepository;
+
+    @Autowired
+    private ModelMapper modelMapperConfig;
 
     @Override
     public ResponseDto signUp(CreateUserDto createUserDto) {
@@ -55,21 +61,8 @@ public class UserServiceImplementation implements UserService {
             return new ResponseDto("failed",HttpStatus.NOT_FOUND,null);
         }
         UserEntity user = isPresent.get();
-        if(updatetUserDto.getFirstName() != null){
-            user.setFirstName(updatetUserDto.getFirstName());
-        }
-        if(updatetUserDto.getLastName() != null){
-            user.setLastName(updatetUserDto.getLastName());
-        }
-        if(updatetUserDto.getEmail() != null){
-            user.setEmail(updatetUserDto.getEmail());
-        }
-        if(updatetUserDto.getPassword() != null) {
-            user.setPassword(updatetUserDto.getPassword());
-        }
-        if(updatetUserDto.getPhoneNo() != null){
-            user.setPhoneNo(updatetUserDto.getPhoneNo());
-        }
+
+        modelMapperConfig.map(updatetUserDto,user);
 
         UserEntity updateedUser = userRepository.save(user);
 
