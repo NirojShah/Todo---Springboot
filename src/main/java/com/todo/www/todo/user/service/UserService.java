@@ -9,4 +9,5 @@ public interface UserService {
     ResponseDto signUp(CreateUserDto createUserDto);
     ResponseDto login(LoginUserDto loginUserDto);
     ResponseDto updateProfile(UpdaetUserDto updaetUserDto, int userId);
+    ResponseDto deleteProfile(int userId);
 }
