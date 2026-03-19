@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -67,5 +69,19 @@ public class UserServiceImplementation implements UserService {
         UserEntity updateedUser = userRepository.save(user);
 
         return new ResponseDto("success",HttpStatus.OK,null);
+    }
+
+    @Override
+    public ResponseDto deleteProfile(int userId) {
+        Optional<UserEntity> isPresent = userRepository.findById(userId);
+        if(isPresent.isEmpty()){
+            Map<String,String> response = new HashMap<>();
+            response.put("message","User not found");
+            return new ResponseDto("failed",HttpStatus.NOT_FOUND,response);
+        }
+        UserEntity user = isPresent.get();
+        userRepository.delete(user);
+        return new ResponseDto("success",HttpStatus.ACCEPTED,null);
+
     }
 }
