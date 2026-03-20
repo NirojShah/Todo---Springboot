@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -83,5 +84,19 @@ public class UserServiceImplementation implements UserService {
         userRepository.delete(user);
         return new ResponseDto("success",HttpStatus.ACCEPTED,null);
 
+    }
+
+    @Override
+    public ResponseDto allUser() {
+        List<UserEntity> users = userRepository.findAll();
+        if(users.isEmpty()){
+            return new ResponseDto("success",HttpStatus.NO_CONTENT,null);
+        }
+        return new ResponseDto("success",HttpStatus.FOUND,users);
+    }
+
+    @Override
+    public ResponseDto userDetails(int userId) {
+        return null;
     }
 }
