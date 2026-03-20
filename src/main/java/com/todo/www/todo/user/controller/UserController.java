@@ -34,4 +34,9 @@ public class UserController {
     public ResponseDto deleteUser(@PathVariable int id){
         return userService.deleteProfile(id);
     }
+
+    @GetMapping("/users")
+    public ResponseDto getAllUsers(){
+        return userService.allUser();
+    }
 }
