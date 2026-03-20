@@ -10,4 +10,6 @@ public interface UserService {
     ResponseDto login(LoginUserDto loginUserDto);
     ResponseDto updateProfile(UpdaetUserDto updaetUserDto, int userId);
     ResponseDto deleteProfile(int userId);
+    ResponseDto allUser();
+    ResponseDto userDetails(int userId);
 }
