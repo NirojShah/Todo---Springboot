@@ -97,6 +97,12 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public ResponseDto userDetails(int userId) {
-        return null;
+        Optional<UserEntity> user = userRepository.findById(userId);
+        if(user.isEmpty()){
+            return new ResponseDto("failed",HttpStatus.NOT_FOUND,null);
+        }
+
+        UserEntity userInfo = user.get();
+        return new ResponseDto("success", HttpStatus.FOUND,userInfo);
     }
 }
