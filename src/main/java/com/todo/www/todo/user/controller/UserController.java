@@ -39,4 +39,9 @@ public class UserController {
     public ResponseDto getAllUsers(){
         return userService.allUser();
     }
+
+    @GetMapping("/user/{id}")
+    public ResponseDto getUser(@PathVariable int userid){
+        return userService.userDetails(userid);
+    }
 }
