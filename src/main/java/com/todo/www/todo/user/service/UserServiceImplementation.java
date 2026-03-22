@@ -59,10 +59,13 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public ResponseDto updateProfile(UpdaetUserDto updatetUserDto, int userId) {
+
         Optional<UserEntity> isPresent = userRepository.findById(userId);
+
         if(isPresent.isEmpty()){
             return new ResponseDto("failed",HttpStatus.NOT_FOUND,null);
         }
+
         UserEntity user = isPresent.get();
 
         modelMapperConfig.map(updatetUserDto,user);
@@ -74,12 +77,15 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public ResponseDto deleteProfile(int userId) {
+
         Optional<UserEntity> isPresent = userRepository.findById(userId);
+
         if(isPresent.isEmpty()){
             Map<String,String> response = new HashMap<>();
             response.put("message","User not found");
             return new ResponseDto("failed",HttpStatus.NOT_FOUND,response);
         }
+
         UserEntity user = isPresent.get();
         userRepository.delete(user);
         return new ResponseDto("success",HttpStatus.ACCEPTED,null);
@@ -88,21 +94,27 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public ResponseDto allUser() {
+
         List<UserEntity> users = userRepository.findAll();
+
         if(users.isEmpty()){
             return new ResponseDto("success",HttpStatus.NO_CONTENT,null);
         }
+
         return new ResponseDto("success",HttpStatus.FOUND,users);
     }
 
     @Override
     public ResponseDto userDetails(int userId) {
+
         Optional<UserEntity> user = userRepository.findById(userId);
+
         if(user.isEmpty()){
             return new ResponseDto("failed",HttpStatus.NOT_FOUND,null);
         }
 
         UserEntity userInfo = user.get();
+
         return new ResponseDto("success", HttpStatus.FOUND,userInfo);
     }
 }
