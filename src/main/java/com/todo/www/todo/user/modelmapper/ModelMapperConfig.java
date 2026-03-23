@@ -16,9 +16,9 @@ public class ModelMapperConfig {
         mapper.getConfiguration()
                 .setFieldMatchingEnabled(true)
                 .setFieldAccessLevel(Configuration.AccessLevel.PRIVATE)
-                .setSkipNullEnabled(true); // ✅ only update non-null fields
+                .setSkipNullEnabled(true);
 
-        // ✅ skip restricted fields
+
         mapper.typeMap(UpdaetUserDto.class, UserEntity.class)
                 .addMappings(m -> {
                     m.skip(UserEntity::setId);
