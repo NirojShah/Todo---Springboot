@@ -1,7 +1,10 @@
 package com.todo.www.todo.user;
 
+import com.todo.www.todo.entity.Todo;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -28,4 +31,6 @@ public class UserEntity {
     @Column(nullable = false, unique = true)
     private String email;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Todo> todos;
 }
