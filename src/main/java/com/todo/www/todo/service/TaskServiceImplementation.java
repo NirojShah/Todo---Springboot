@@ -5,6 +5,8 @@ import com.todo.www.todo.dto.ResponseDto;
 import com.todo.www.todo.dto.TaskDto;
 import com.todo.www.todo.dto.TaskUpdateDto;
 import com.todo.www.todo.entity.Todo;
+import com.todo.www.todo.user.UserEntity;
+import com.todo.www.todo.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -16,13 +18,21 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class TaskServiceImplementation implements TodoService{
     private final TodoRepository todoRepository;
+    private final UserRepository userRepository;
 
     @Override
     public ResponseDto createTask(TaskDto taskDto) {
         Todo todo = new Todo();
 
+        Optional<UserEntity> user = userRepository.findById(taskDto.getUserId());
+
+        if(user.isEmpty()){
+            return new ResponseDto("failed",HttpStatus.NOT_FOUND,"user is not present");
+        }
+        UserEntity userInfo = user.get();
         todo.setStatus(taskDto.getStatus());
         todo.setTodo(taskDto.getTodo());
+        todo.setUser(userInfo);
 
         Todo savedTodo = todoRepository.save(todo);
 
