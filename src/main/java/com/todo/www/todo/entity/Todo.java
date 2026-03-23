@@ -1,7 +1,7 @@
 package com.todo.www.todo.entity;
 
 import com.todo.www.todo.Status;
-import com.todo.www.todo.dto.TaskDto;
+import com.todo.www.todo.user.UserEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,5 +23,9 @@ public class Todo {
 
     @Enumerated(EnumType.STRING)
     private Status status;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private UserEntity user;
 
 }
