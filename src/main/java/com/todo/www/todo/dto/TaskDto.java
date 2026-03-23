@@ -11,4 +11,5 @@ import lombok.*;
 public class TaskDto {
     private String todo;
     private Status status;
+    private int userId;
 }
