@@ -71,8 +71,8 @@ public class TaskServiceImplementation implements TodoService{
     }
 
     @Override
-    public ResponseDto getTasks() {
-        List<Todo> todos = todoRepository.findAll();
+    public ResponseDto getTasks(int userId) {
+        List<Todo> todos = todoRepository.findByuserId(userId);
         return new ResponseDto("success",HttpStatus.OK,todos);
     }
 }
