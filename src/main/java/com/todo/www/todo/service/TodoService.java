@@ -12,5 +12,5 @@ public interface TodoService {
     ResponseDto createTask(TaskDto taskDto);
     ResponseDto deleteTask(Integer taskId);
     ResponseDto updateTask(TaskUpdateDto taskUpdateDto);
-    ResponseDto getTasks();
+    ResponseDto getTasks(int userId);
 }
