@@ -19,9 +19,9 @@ public class TodoController {
         return todoService.createTask(taskDto);
     }
 
-    @GetMapping("/todos")
-    public ResponseDto getTasks(){
-        return todoService.getTasks();
+    @GetMapping("/todos/{id}")
+    public ResponseDto getTasks(@PathVariable int id){
+        return todoService.getTasks(id);
     }
 
     @PutMapping("/todo")
